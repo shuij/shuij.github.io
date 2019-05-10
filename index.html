@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>雪花飘</title>
+<style>
+*{margin:0;padding:0}
+html,body {overflow:hidden;}
+body{background:#333;}
+</style>
+</head>
+
+<body>
+
+
+<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+//我测试一下
+
+var minSize=5;//雪片的最小尺寸
+var maxSize=50;//雪片的最大尺寸
+var speed=100;//雪片的下降速度为100毫秒
+var color="#fff";//雪片的颜色为白色
+var snowflake=$("<div></div>").css({"position":"absolute","top":"-50px"}).html("❉");
+//创建一个div用来放雪花的并让其从浏览器-50px处飘落
+
+
+$(function(){
+	var height=$(document).height();//获取浏览器的高度	
+	var width=$(document).width();//获取浏览器的宽度
+//设置一个定时器，让雪花飘落	
+setInterval(function(){
+var size=minSize+Math.random()*maxSize;//雪片下降的大小
+var startOpacity=0.7+Math.random()*0.3;	//开始下降时雪片的不透明度
+var time=4000+Math.random()*3000;//雪片在下降整个过程中所持续的时长
+var startPositionLeft=Math.random()*width;	//开始下降之前距离浏览器左边的位置
+var endPositionLeft=Math.random()*width;	//结束下降时距离浏览器左边的位置
+var endPositionTop=height;//下降结束距离浏览器的高度
+
+//将创建的雪花克隆，插入到body中，并设置css样式	
+snowflake.clone().appendTo("body").css({
+	"left":startPositionLeft,  
+	"opacity":startOpacity,
+	"font-size":size,
+	"color":color
+	}).animate({/*执行一个动画，修改css样式*/
+		"top":endPositionTop,
+		"left":endPositionLeft,
+		"opacity":0.5
+		},time,function(){$(this).remove();});  //给一个调函数，删除下降到底部的雪花
+	},speed);
+
+	
+});
+</script>
+
+
+</body>
+</html>
