@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin:0 auto;}
+        body{background:#C6E2FF;}
+        #container{border:1px solid #3366CC;margin:100px auto;width:600px;height:600px;}
+        /*#canvas{background:url("img/clock.png") no-repeat 0 0/100% 100%;border-radius: 50%;}*/
+    </style>
+</head>
+<body>
+<div id="container">
+    <canvas id="canvas" width="600" height="600"></canvas>
+</div>
+
+<script>
+var canvas=document.querySelector("#canvas");
+var cxt=canvas.getContext("2d");
+function clock(){
+    cxt.clearRect(0,0,canvas.width,canvas.height);
+    var date=new Date();
+    var h=date.getHours();
+    var m=date.getMinutes();
+    var s=date.getSeconds();
+    h=h>12?h-12:h;
+    h+=m/60;
+
+//1.绘制表盘大圆
+    cxt.save();
+    cxt.beginPath();
+    cxt.lineWidth=2;
+    cxt.arc(300,300,300,0,Math.PI*2);
+//    cxt.fillStyle="#87CEEB";
+//    cxt.fill();
+    cxt.strokeStyle="#00FF7F";
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+
+//8.添加背景图片；
+cxt.clip();
+var img=new Image();
+img.src="img/clock.png";
+cxt.drawImage(img,0,0,600,600);
+
+//2.绘制分刻度
+    cxt.save();
+    cxt.strokeStyle="#f1f1f1";
+    cxt.translate(300,300);
+    cxt.lineWidth=6;
+    for(var i=0;i<60;i++){
+        cxt.save();
+        cxt.beginPath();
+        cxt.rotate(Math.PI/180*6*i);
+        cxt.moveTo(0,-295);
+        cxt.lineTo(0,-280);
+        cxt.stroke();
+        cxt.closePath();
+        cxt.restore();
+    }
+    cxt.restore();
+
+//2.绘制时刻度
+    cxt.save();
+    cxt.strokeStyle="#7D7DFF";
+    cxt.translate(300,300);
+    cxt.lineWidth=10;
+    for(var j=0;j<12;j++){
+        cxt.save();
+        cxt.beginPath();
+        cxt.rotate(Math.PI/180*30*j);
+        cxt.moveTo(0,-295);
+        cxt.lineTo(0,-270);
+        cxt.stroke();
+        cxt.closePath();
+        cxt.restore();
+    }
+    cxt.restore();
+//3.绘制时针
+    cxt.save();
+    cxt.translate(300,300);
+    cxt.strokeStyle="#B766AD";
+    cxt.lineWidth=10;
+    cxt.rotate(Math.PI/180*30*h);
+    cxt.beginPath();
+    cxt.moveTo(0,27);
+    cxt.lineTo(0,-140);
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+
+//4.绘制分针
+    cxt.save();
+    cxt.translate(300,300);
+    cxt.strokeStyle=" #FF9D6F ";
+    cxt.lineWidth=7;
+    cxt.rotate(Math.PI/180*6*m);
+    cxt.beginPath();
+    cxt.moveTo(0,22);
+    cxt.lineTo(0,-190);
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+//5.绘制秒针
+    cxt.save();
+    cxt.translate(300,300);
+    cxt.lineWidth=5;
+    cxt.strokeStyle="#4EFEB3";
+    cxt.rotate(Math.PI/180*6*s);
+    cxt.beginPath();
+    cxt.moveTo(0,23);
+    cxt.lineTo(0,-240);
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+//6.绘制中心小圆
+    cxt.save();
+    cxt.strokeStyle="#00DB00";
+    cxt.translate(300,300);
+    cxt.lineWidth=4;
+    cxt.fillStyle="#ADFEDC";
+    cxt.beginPath();
+    cxt.arc(0,0,10,0,Math.PI*2);
+    cxt.fill();
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+//7.绘制秒针上的小圆
+    cxt.save();
+    cxt.strokeStyle="#00DB00";
+    cxt.translate(300,300);
+    cxt.lineWidth=4;
+    cxt.fillStyle="#4DFFFF";
+    cxt.rotate(Math.PI/180*6*s);
+    cxt.beginPath();
+    cxt.arc(0,-190,10,0,Math.PI*2);
+    cxt.fill();
+    cxt.stroke();
+    cxt.closePath();
+    cxt.restore();
+
+
+
+
+
+
+}
+clock();
+setInterval(clock,1000);
+
+</script>
+</body>
+</html>
