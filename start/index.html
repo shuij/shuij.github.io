@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>星星海效果</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+     
+    }
+    html,body,#box{
+        width:100%;
+        height:100%;
+        background:#000;
+        margin:0 auto;
+        overflow: hidden;
+    }
+    span {
+    	display: inline-block;
+    	width:40px;
+    	height:40px;
+    	background: url('start.png') no-repeat center center ;
+    	background-size: 50% 50%;
+    	position: absolute;
+        animation: flash 1s alternate infinite;
+        cursor: pointer !important;
+    }
+    @keyframes flash {
+        0% {opacity: 0;}
+        100% {opacity: 1;}
+    }
+    span:hover {
+        transform: scale(3,3) rotate(-90deg) !important;
+        transition: all 1s;
+        z-index:99 !important;
+    }
+  
+    
+    </style>
+</head>
+<body>
+<div id="box">
+    <span></span>
+</div>
+
+
+<script>
+
+window.onload = function() {
+    //1.求出屏幕的尺寸大小
+    var w = document.body.clientWidth
+    var h = document.body.clientHeight
+    //2.获取元素
+    var box = document.getElementById('box') 
+    var starts = 150
+    // 3.动态创建星星
+    for(var i=0;i<starts;i++) {
+        // 3.1创建星星
+        var span = document.createElement('span')
+        document.body.appendChild(span)
+        // 3.2获取随机坐标
+        ws = parseInt(Math.random() * (w-40))
+        hs = parseInt(Math.random() * (h-40))
+        span.style.left = ws + 'px'
+        span.style.top = hs + 'px'
+        // 3.3随机缩放
+        var scale = Math.random() * 1.5
+        span.style.transform = 'scale('+scale+','+scale+')'
+        //3.4控制闪烁的频率
+        var rate = Math.random() * 1.5
+        span.style.animationDelay = rate + 's'
+        
+    }  
+         
+
+
+}
+</script>
+</body>
+</html>
